@@ -49,6 +49,8 @@ Tests use Node's built-in test runner. The build copies the browser files into `
 
 The [provided session requirements](https://docs.google.com/document/d/1Jw-iFUt6voVCT2pfL8avH39dGE8FeF6XEpFZJL_mpZM/edit) describe an isolated Linux desktop with Node 22, a browser, no internet, no GPU, and no sound. This repository is designed for those limits.
 
+Download the ready-to-upload `sushi-rush-alignerr-upload.tar.gz` from the [latest release](https://github.com/andrianaria/sushi-rush-alignerr/releases/latest). It includes `.git`; GitHub's automatic **Download ZIP** and source archives do not. To create a fresh upload after changing the code, follow the steps below.
+
 After committing the source and setting the repository's credential-free GitHub origin, run:
 
 ```sh
