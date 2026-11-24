@@ -1,0 +1,16 @@
+{
+  "name": "sushi-rush-alignerr",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A standalone, single-page cooking game that runs on an isolated desktop.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/server.mjs",
+    "dev": "node scripts/server.mjs",
+    "preview": "node scripts/server.mjs --directory dist",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.js",
+    "package": "node scripts/package.mjs"
+  }
+}
