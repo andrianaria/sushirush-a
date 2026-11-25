@@ -1,8 +1,8 @@
 /** Increment whenever replay or money rules change; old sessions must not resume. */
 export const RULES_VERSION = 3;
-/** Reject local saves when the recipe catalogue changes. */
+/** Pre-launch catalogue revision; do not replay older practice inputs against a changed menu pool. */
 export const CATALOG_REVISION = 2;
-/** Fictional game values. These are not commercial menu prices. */
+/** Base menu prices, before tax/service. A missing verified price is never guessed. */
 export const MENU_PRICES = {
     'cheesy': 33_000,
     'salmon-mozza': 33_000,
@@ -15,12 +15,8 @@ export const MENU_PRICES = {
     'hikari-cake': 65_000,
     'kokoro-cake': 65_000,
 };
-export const PRICE_SOURCE = {
-    source: 'fictional-game-economy',
-    currency: 'IDR',
-    note: 'Fixed game values used only to compare rounds. No purchases or prizes.',
-};
-/** Shared by local play and deterministic replay. No combo money bonuses. */
+export const PRICE_SOURCE = { source: 'fictional-game-economy', currency: 'IDR', note: 'Fixed game values for local play.' };
+/** Shared by browser play and trusted server replay. No artificial money bonuses. */
 export const BALANCE = {
     durationMs: 60_000,
     gridSize: 5,

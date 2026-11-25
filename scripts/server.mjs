@@ -35,7 +35,7 @@ function browserPath(requestUrl) {
   if (decoded === '/') return 'index.html';
   const relative = decoded.slice(1);
   if (relative === 'index.html' || relative === 'favicon.svg') return relative;
-  if (relative.startsWith('src/') || relative.startsWith('public/')) return relative;
+  if (relative.startsWith('src/') || relative.startsWith('public/') || relative.startsWith('browser/') || relative.startsWith('vendor/browser/')) return relative;
   return null;
 }
 

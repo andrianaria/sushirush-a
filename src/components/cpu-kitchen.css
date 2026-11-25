@@ -1,0 +1,17 @@
+.cpu-kitchen{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:12px 18px;background:#f5f0dc;color:#171714}
+.cpu-kitchen-note{font-size:9px;line-height:1.5;text-align:center;color:#7c755f}
+.cpu-kitchen-board{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));width:min(100%,360px);aspect-ratio:1;border:4px solid #8a906f;border-radius:7px;background:#e8e3ca;box-shadow:0 4px 0 #b7b99c;user-select:none}
+.cpu-kitchen-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff9e2;box-shadow:inset 0 0 0 1px #b9b39433;gap:3px}
+.cpu-kitchen-cell.alternate{background:#e8e4ca}
+.cpu-kitchen-cell.station{margin:3px;border:1px solid #a2a184;border-radius:5px;box-shadow:inset 0 -4px 0 #17171412}
+.cpu-kitchen-cell>span{font-size:23px;line-height:1.1}
+.cpu-kitchen-cell>strong{font-size:7px;line-height:1.1;letter-spacing:.2px}
+.cpu-kitchen-cell.next{outline:3px solid #4a7755;outline-offset:0;z-index:1}
+.cpu-kitchen-chef{position:absolute;left:0;top:0;z-index:2;width:20%;height:20%;display:grid;place-items:center;pointer-events:none;transition:transform 90ms linear}
+.cpu-kitchen-chef>svg{width:80%;height:96%;overflow:visible;filter:drop-shadow(0 2px 1px #17171422)}
+.cpu-kitchen-controls{display:flex;justify-content:center;gap:7px}
+.cpu-kitchen-controls button{display:grid;place-items:center;width:43px;height:37px;padding:0;border:1px solid #aeb49b;border-bottom-width:3px;border-radius:5px;background:#fffdf7;color:#4b6651;font-size:22px;line-height:1;touch-action:manipulation}
+.cpu-kitchen-controls button:disabled{opacity:.4}
+.cpu-kitchen-controls button:focus-visible{outline:2px solid #e55549;outline-offset:3px}
+@media(max-width:600px){.cpu-kitchen{padding:9px 13px;gap:6px}.cpu-kitchen-board{width:min(100%,265px)}.cpu-kitchen-note{font-size:7px}.cpu-kitchen-cell{gap:2px}.cpu-kitchen-cell>span{font-size:18px}.cpu-kitchen-cell>strong{font-size:5px}.cpu-kitchen-controls button{width:38px;height:31px;font-size:20px}}
+@media(prefers-reduced-motion:reduce){.cpu-kitchen-chef{transition:none}}

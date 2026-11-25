@@ -1,0 +1,11 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from '../../vendor/browser/jsx-runtime.js';
+export function Sun({ className = '' }) {
+    return _jsxs("svg", { className: className, viewBox: "0 0 100 100", fill: "none", "aria-hidden": "true", children: [_jsx("g", { stroke: "currentColor", strokeWidth: "3", children: Array.from({ length: 16 }, (_, i) => _jsx("path", { d: "M50 2v13", transform: `rotate(${i * 22.5} 50 50)` }, i)) }), _jsx("circle", { cx: "50", cy: "50", r: "27", fill: "currentColor" })] });
+}
+export function SushiIcon({ kind = 'roll', className = '' }) {
+    const bowl = kind === 'ramen';
+    return _jsx("svg", { viewBox: "0 0 80 64", className: `sushi-icon ${className}`, fill: "none", "aria-hidden": "true", children: bowl ? _jsxs(_Fragment, { children: [_jsx("path", { d: "M9 30h62c-3 23-14 29-31 29S12 53 9 30Z", fill: "#e55549" }), _jsx("ellipse", { cx: "40", cy: "30", rx: "31", ry: "12", fill: "#f8ce58" }), _jsx("path", { d: "M18 31c4-14 10 13 16-2s10 12 16-2 9 5 12 1", stroke: "#fffdf7", strokeWidth: "3" }), _jsx("ellipse", { cx: "47", cy: "26", rx: "8", ry: "6", fill: "#fffdf7" }), _jsx("ellipse", { cx: "47", cy: "26", rx: "4", ry: "3", fill: "#f8ce58" }), _jsx("path", { d: "m28 15 15-13M38 17 55 3", stroke: "#815735", strokeWidth: "3", strokeLinecap: "round" }), _jsx("path", { d: "m24 29 2 5m29 1 2-6", stroke: "#38503b", strokeWidth: "4" })] }) : _jsxs(_Fragment, { children: [_jsx("ellipse", { cx: "40", cy: "53", rx: "33", ry: "7", fill: "#000", opacity: ".09" }), _jsx("path", { d: "M16 20h48v23c0 10-48 10-48 0V20Z", fill: "#263e32" }), _jsx("ellipse", { cx: "40", cy: "21", rx: "24", ry: "16", fill: "#fffdf7" }), _jsx("ellipse", { cx: "40", cy: "21", rx: "18", ry: "11", fill: "#e55549" }), _jsx("path", { d: "m30 16 18 10m-13-15 19 10", stroke: "#f7bb91", strokeWidth: "3" }), _jsx("path", { d: "m27 26 5-6 5 7", fill: "#79b9a9" }), _jsx("path", { d: "m44 14 8 2-1 9-8-1", fill: "#f8ce58" }), _jsx("path", { d: "M20 34v8m5-5v7m32-12v8", stroke: "#466349", strokeWidth: "2" })] }) });
+}
+export default function Brand({ small = false }) {
+    return _jsx("span", { className: `brand ${small ? 'small' : ''}`, children: _jsx("img", { className: "brand-logo", src: `${'./public/'}sushi-rush-logo.svg`, alt: "Sushi Rush 60", width: small ? 90 : 122 }) });
+}

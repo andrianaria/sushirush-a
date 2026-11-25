@@ -1,52 +1,57 @@
 # Isolated desktop verification
 
-The target environment is Linux with Node 22 and a browser. There is no internet, GPU, Docker, or sound. The project does not need any of those services to run.
+This copy preserves the original 3D kitchen and interface. The isolated desktop needs Node 22 and a browser; running and rebuilding use only the files in the upload.
 
-## Verified base
+## Verified source
 
-On 24 November 2026, all 28 engine, storage, and HTTP tests passed on Node 22.22.2. The same tests, a static build, and a loopback HTTP smoke check passed on Linux with Node 22.23.3 and networking disabled. That test environment used a container on the preparation machine; running this project on the target desktop does not require a container.
+On 25 November 2026, all 52 tests passed locally and on Linux Node 22.23.3. The Linux run rebuilt the TypeScript/TSX frontend before testing, with networking disabled, a read-only system filesystem, and no package installation. Built pages, browser modules, local React vendors, font CSS, and the neutral logo returned HTTP 200 with correct content types. The container was a preparation-machine test tool; the target desktop does not need Docker.
 
-Browser verification used Chrome with GPU and WebGL disabled and all non-local requests blocked. It covered cooking and delivering a complete dish, exact earnings, pause, reload/resume, order switching, the end of a 60-second shift, local personal best, a fresh shift, keyboard-accessible direction buttons, and a 390px viewport. A separate browser context with blocked local storage still started, moved the chef, and completed the shift. There were no external requests or application console errors. The actual hosted Alignerr desktop was not accessed.
+Browser checks confirmed the original Three.js scene renders and the chef can move into the first recipe station, advancing ingredient progress. A separate temporary test server simulated WebGL initialization failure without modifying the production frontend. The secondary view completed all four ingredients and delivered one dish for exactly Rp33.000; pause then froze the clock at 57 seconds. The default remains the original 3D scene. The hosted Alignerr desktop itself was not accessed.
 
-## Automated checks
+Strict TypeScript semantic validation reported zero diagnostics. Local vendor import tests cover React hooks, JSX Fragment, ReactDOM createRoot, Three WebGLRenderer, geometry helpers, and loading the compiled App and kitchen modules.
 
-From the extracted repository:
-
-```sh
-node --version
-npm test
-npm run build
-npm run preview
-```
-
-Use Node 22 or newer. Tests cover the deterministic game rules and local HTTP serving. The server tests exercise page/module/image MIME types, HEAD behavior, hidden-file protection, path traversal, symlinks, and unsupported HTTP methods.
-
-## Browser checks
-
-1. Open `http://127.0.0.1:3000` in the desktop browser. The page and menu images should load without a login or external connection.
-2. Start a round. Choose the first order and use the arrow keys or WASD to enter the stations in recipe order. Verify that ingredient progress advances only at the expected station.
-3. After the last ingredient, enter the serving bar. Verify that earnings and the completed-order count increase.
-4. Pick a different order after collecting an ingredient. The new recipe should start at its first step, while the deadline continues.
-5. Pause. Wait several seconds. The clock should remain unchanged. Resume and verify it continues from that time.
-6. Pause an unfinished round and reload. Resume the saved round and check that its clock, selected order, position, and recipe progress are restored.
-7. Let a round finish. Verify that results appear, local records update, and a new round starts at 60 seconds.
-8. Check a narrow browser window. Order selection, the kitchen, recipe progress, and direction controls must remain usable without horizontal scrolling.
-9. In developer tools, inspect Network and Console. Requests should use only the local origin, with no failed external requests or uncaught application errors.
-
-The UI uses HTML and CSS, so disabling WebGL should not change whether the game is playable. Audio is not part of the game.
-
-## Archive checks
-
-After creating the upload archive, extract it into a fresh directory. Verify:
+## Run and edit
 
 ```sh
-git status --short
-git log -1 --oneline
-git remote -v
-npm test
 npm start
 ```
 
-The working tree should be clean, the Git origin should be a credential-free GitHub URL, and the page should run without installing packages. No `.env`, authentication token, database dump, or production configuration belongs in the upload.
+Open `http://127.0.0.1:3000`. Keep the terminal running. Opening `index.html` directly as `file://` prevents browsers from loading its modules; the page then shows local launch instructions.
 
-Local testing cannot prove that a particular hosted workspace has no platform-specific restrictions. Repeat the browser checks after uploading the archive to that workspace.
+After editing TS/TSX source:
+
+```sh
+npm run build
+npm test
+```
+
+Refresh the browser. CSS edits need only a refresh. Music is optional, and unsupported audio devices fail without stopping gameplay.
+
+## Manual browser checks
+
+1. Start practice and finish the tutorial dialog.
+2. Move with arrows, WASD, or the original drag controller; enter ingredient stations in recipe order.
+3. Walk to the serving bar after preparing a dish. Earnings increase on delivery.
+4. Switch dishes during prep. Recipe progress resets while the order deadline continues.
+5. Pause, wait, and resume. The clock must not advance during pause.
+6. Reload an unfinished saved round and continue it.
+7. Finish a 60-second round and start another.
+8. Check the original responsive layout at a narrow width.
+9. Verify all resources load from the local server.
+
+## Upload archives
+
+`npm run package` creates a ZIP and TAR with the same top-level `sushi-rush-alignerr` folder. Both include ready-to-run browser files, source, local vendors, the portable compiler, licenses, and a fresh `.git` directory.
+
+The anonymous snapshot has an empty author/committer address and no previous history, reflogs, personal Git configuration, credentials, or production files. Its commit ID differs from the published source commit; the published repository is not rewritten. Packaging scans every raw file and every decoded Git object before saving either archive. Font name metadata was also inspected for addresses and removed branding.
+
+After extracting an upload, verify:
+
+```sh
+git status --short
+git fsck --strict
+git log -1 --format=fuller
+npm start
+```
+
+The tree must be clean and the game must run without installing packages. Upload this prepared archive through the workspace's Upload control, with Extract selected; the GitHub automatic source ZIP does not include `.git`.

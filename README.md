@@ -1,12 +1,12 @@
 # Sushi Rush 60
 
-A standalone, single-page cooking game. Choose an order, collect ingredients in recipe order, and reach the serving bar before the clock runs out. This personal project base uses a local game engine, original SVG food illustrations, and browser storage.
+A standalone copy of the original single-page Sushi Rush 60 game. It preserves the original 3D kitchen, chef, camera, layout, drag controls, music, and cooking rules. Branding and connected account/competition services are removed.
 
-![Sushi Rush kitchen preview](docs/desktop-preview.png)
+![Original 3D kitchen preview](docs/desktop-preview.jpg)
 
 ## Run on an isolated desktop
 
-Requires **Node.js 22 or newer** and a browser. No package installation, internet access, GPU, sound, Docker, account, database, API key, or production service is needed.
+Requires **Node.js 22 or newer** and a browser. Running and rebuilding need no package installation or internet access. No account, database, API key, Docker, or production service is needed. The original 3D view uses WebGL; a secondary playable view appears only when the browser cannot provide it. Sound is optional.
 
 ```sh
 cd sushi-rush-alignerr
@@ -21,19 +21,19 @@ To use another port:
 npm start -- --port 3001
 ```
 
-`npm run dev` runs the same server. Source files are served directly; refresh the browser after editing them. Do not open `index.html` with a `file://` URL, because browsers restrict JavaScript module loading there.
+`npm run dev` runs the same server. After editing TypeScript or TSX source, run `npm run build` and refresh the browser. CSS changes need only a refresh. Open the localhost URL: browsers restrict JavaScript module loading when `index.html` is opened as a `file://` URL.
 
 ## Play
 
 - Start a 60-second round. Pick one of three order cards with the mouse or keys **1**, **2**, and **3**.
-- Move with **WASD**, the **arrow keys**, or the on-screen direction buttons.
+- Move with **WASD**, the **arrow keys**, or the original hold-and-drag controls. The secondary view also has direction buttons.
 - Enter each required station in the order shown by the recipe. Ingredients are collected when you move onto the station tile.
 - After the final ingredient, move onto the **serving bar** to deliver the order. Completing the recipe alone does not deliver it.
 - Changing orders resets the current recipe's progress; it does not restart the order deadline.
 - Pause and resume a round locally. An unfinished round can be resumed from this browser's saved state. Clearing browser storage removes local progress and records.
-- The result shows the round's earnings, completed orders, and best combo. Prices are fictional game values; records are local to this browser.
+- The result shows the round's earnings, completed orders, and best combo. Prices are game values; saved practice is local to this browser.
 
-The kitchen is rendered with ordinary HTML and CSS. Gameplay does not depend on WebGL or audio.
+The original Three.js kitchen is the default. The secondary view is a compatibility fallback, without changing the game engine or its station positions. Audio is not required to complete a round.
 
 ## Check and build
 
@@ -43,13 +43,13 @@ npm run build
 npm run preview
 ```
 
-Tests use Node's built-in test runner. The build copies the browser files into `dist/`; it does not download or compile dependencies. Preview serves that output at the same loopback address. Stop an existing server before starting another on the same port.
+Tests use Node's built-in test runner. The build transpiles the original TypeScript/TSX source into `browser/` using a bundled, pure-JavaScript TypeScript compiler. React, Three.js, icons, and fonts are local. There are no platform-specific build binaries. A runnable `browser/` is included in Git and the upload archive, and the build also creates `dist/` for preview. Stop an existing server before starting another on the same port.
 
 ## Prepare an Alignerr upload
 
 The [provided session requirements](https://docs.google.com/document/d/1Jw-iFUt6voVCT2pfL8avH39dGE8FeF6XEpFZJL_mpZM/edit) describe an isolated Linux desktop with Node 22, a browser, no internet, no GPU, and no sound. This repository is designed for those limits.
 
-Download the ready-to-upload `sushi-rush-alignerr-upload.tar.gz` from the [latest release](https://github.com/andrianaria/sushi-rush-alignerr/releases/latest). It includes `.git`; GitHub's automatic **Download ZIP** and source archives do not. To create a fresh upload after changing the code, follow the steps below.
+Download the ready-to-upload `sushi-rush-alignerr-upload.zip` from the [latest release](https://github.com/andrianaria/sushi-rush-alignerr/releases/latest). A `.tar.gz` version is also available. Both upload archives include `.git`; GitHub's automatic **Download ZIP** and source archives do not. To create fresh uploads after changing the code, follow the steps below.
 
 After committing the source and setting the repository's credential-free GitHub origin, run:
 
@@ -57,7 +57,7 @@ After committing the source and setting the repository's credential-free GitHub 
 npm run package
 ```
 
-This creates `sushi-rush-alignerr-upload.tar.gz` next to the repository. It contains the committed source **and its `.git` folder**, with a portable Git configuration. Ignored local files, dependencies, and build output are excluded. The archive name uses only letters, digits, and dashes before `.tar.gz`.
+This creates `sushi-rush-alignerr-upload.zip` and `sushi-rush-alignerr-upload.tar.gz` next to the repository. Each contains the committed source, portable compiler, local browser vendors, ready-to-run browser files, **and a fresh `.git` folder**, with an anonymous snapshot commit and a portable GitHub origin. The snapshot has its own commit ID; it does not carry prior history or author identity. Published GitHub history remains unchanged. Ignored local files, `node_modules`, `dist`, and local Git configuration are excluded. The helper scans raw files and decoded Git objects for addresses and removed branding. It needs `git`, `tar`, and `zip` only for packaging.
 
 Before the first session message, upload that archive through the workspace's **Upload** control, supply this repository's GitHub main-page URL as its source, choose **Extract**, and save. The extracted project should appear under `/home/model/Uploads/sushi-rush-alignerr`. In its terminal, run:
 
@@ -73,13 +73,17 @@ The project must be approved by the project contact before its first session. Th
 ## Source map
 
 ```text
-index.html              Single-page interface
-src/app.js              Browser interaction, clock, local persistence
-src/styles.css          Responsive kitchen and interface
-src/game/               Deterministic game engine, recipes, balance
-public/menu/            Local food images
+index.html              One browser page and local launch instructions
+src/App.tsx             Original practice flow, layout, controls, and audio
+src/components/         Original 3D scene, drag controller, fallback, and tutorial
+src/styles.css          Original responsive interface styles
+src/game/               Deterministic game engine, recipes, balance, and tests
+src/lib/                Local practice storage, menu assets, and original audio
+browser/                Ready-to-run browser modules
+vendor/                 Portable compiler, browser libraries, and licenses
+public/                 Local illustrations, neutral logo, fonts, and licenses
 scripts/server.mjs      Dependency-free local HTTP server
-scripts/build.mjs       Static output packaging
+scripts/build.mjs       Offline source compilation and static output
 scripts/package.mjs     Clean repository upload archive, including .git
 tests/                  Node test suites
 docs/VERIFICATION.md    Isolated-desktop verification procedure
